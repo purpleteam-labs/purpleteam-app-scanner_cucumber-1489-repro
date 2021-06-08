@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "test": "ava",
+    "test:debug": "ava debug --break ./test/api/app/models/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/purpleteam-labs/purpleteam-app-scanner.git"
+  },
+  "dependencies": {
+    "@cucumber/cucumber": "^7.2.1",
+    "@cucumber/gherkin-streams": "2.0.2"
+  },
+  "devDependencies": {
+    "ava": "^3.15.0",
+    "sinon": "^11.1.1"
+  }
+}
