@@ -25,11 +25,26 @@ class App {
     });
 
     const activeFeatureFileUris = async () => {
-      const envelopes = await streamToArray(GherkinStreams.fromPaths(configuration.featurePaths, { includeSource: false, includeGherkinDocument: false, includePickles: true }));
-      const tagUriMaps = envelopes.map((e) => ({ tagName: e.pickle.tags[0].name, fileUri: e.pickle.uri }));
-      const activeTagUriMaps = tagUriMaps.filter((tU) => activeTags.includes(tU.tagName));
-      const activeUris = activeTagUriMaps.reduce((accum, cV) => [...accum, ...(accum.includes(cV.fileUri) ? [] : [cV.fileUri])], []);
-      return activeUris;
+      const envelopes = await streamToArray(GherkinStreams.fromPaths(configuration.featurePaths, { includeSource: false, includeGherkinDocument: true, includePickles: true }));
+
+      let gherkinDocument = null
+      let pickles = []
+
+      envelopes.forEach(element => {
+        if (element.gherkinDocument) {
+          gherkinDocument = element.gherkinDocument
+        } else if (element.pickle && gherkinDocument) {
+          const pickle = element.pickle
+
+          if (pickleFilter.matches({ gherkinDocument, pickle })) {
+            pickles.push({pickle})
+          }
+        }
+      });
+
+      return pickles
+        .map((p) => p.pickle.uri)
+        .reduce((accum, cV) => [...accum, ...(accum.includes(cV) ? [] : [cV])], []);
     };
 
     return activeFeatureFileUris();

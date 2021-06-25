@@ -55,7 +55,7 @@ test('Given tagExpression: (@app_scan or @simple_math) - when getActiveFeatureFi
 
 // Since cucumber.getTestCasesFromFilesystem was removed, the following test cases fail, including the ones not yet implemented.
 
-test.failing('Given tagExpression: (@app_scan and @simple_math) - when getActiveFeatureFileUris is invoked - then no active feature file Uris should be returned', async (t) => {
+test('Given tagExpression: (@app_scan and @simple_math) - when getActiveFeatureFileUris is invoked - then no active feature file Uris should be returned', async (t) => {
   t.plan(1);
   // Active feature files are based on the cucumber.tagExpression defined in config.
   // https://cucumber.io/docs/cucumber/api/#tag-expressions
@@ -66,7 +66,7 @@ test.failing('Given tagExpression: (@app_scan and @simple_math) - when getActive
   // What we get is: [`${appRootDir}/testResources/features/app_scan.feature`, `${appRootDir}/testResources/features/simple_math.feature`]
 });
 
-test.failing('Given tagExpression: (not @simple_math) - when getActiveFeatureFileUris is invoked - then active feature file Uris app_scan.feature should be returned', async (t) => {
+test('Given tagExpression: (not @simple_math) - when getActiveFeatureFileUris is invoked - then active feature file Uris app_scan.feature should be returned', async (t) => {
   t.plan(1);
   // Active feature files are based on the cucumber.tagExpression defined in config.
   // https://cucumber.io/docs/cucumber/api/#tag-expressions
@@ -112,11 +112,10 @@ Background:
   And all active scanners are disabled
 
 Scenario: The application should not contain vulnerabilities known to Zap that exceed the build user defined threshold
-  Given all active scanners are enabled 
+  Given all active scanners are enabled
   When the active scan is run
   Then the vulnerability count should not exceed the build user defined threshold of vulnerabilities known to Zap
-
-  `;
+`;
   const testPlanText = await app.getTestPlanText(activeFeatureFileUris);
   t.deepEqual(testPlanText, expectedTestPlanText);
 });
@@ -138,11 +137,10 @@ Background:
   And all active scanners are disabled
 
 Scenario: The application should not contain vulnerabilities known to Zap that exceed the build user defined threshold
-  Given all active scanners are enabled 
+  Given all active scanners are enabled
   When the active scan is run
   Then the vulnerability count should not exceed the build user defined threshold of vulnerabilities known to Zap
 
-  
 
 @simple_math
 Feature: Simple maths
